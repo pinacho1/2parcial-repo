@@ -1,0 +1,514 @@
+[pinacho1@webminal.org ~]$pwd                                                         
+/home/pinacho1                                                                        
+[pinacho1@webminal.org ~]$mkdir -v dir1                                               
+mkdir: created directory ‘dir1’                                                       
+[pinacho1@webminal.org ~]$mkdir -v dir2                                               
+mkdir: created directory ‘dir2’                                                       
+[pinacho1@webminal.org ~]$mkdir -v dir2/dir3                                          
+mkdir: created directory ‘dir2/dir3’                                                  
+[pinacho1@webminal.org ~]$mkdir -v dir2/dir3/dir4                                     
+mkdir: created directory ‘dir2/dir3/dir4’                                             
+[pinach                                                                               
+[pinacho1@webminal.org ~]$mkdir -vp dir2/dir3/dir4                                    
+[pinacho1@webminal.org ~]$ls                                                          
+dir1  dir2                                                                            
+[pinacho1@webminal.org ~]$ls -R                                                       
+.:                                                                                    
+dir1  dir2                                                                            
+                                                                                      
+./dir1:                                                                               
+                                                                                      
+./dir2:                                                                               
+dir3                                                                                  
+                                                                                      
+./dir2/dir3:                                                                          
+dir4                                                                                  
+                                                                                      
+./dir2/dir3/dir4:                                                                     
+[pinacho1@webminal.org ~]$cd dir2                                                     
+[pinacho1@webminal.org dir2]$cd                                                       
+[pinacho1@webminal.org ~]$cd dir3                                                     
+-sh: cd: dir3: No such file or directory                                              
+[pinacho1@webminal.org ~]$cd ..                                                       
+[pinacho1@webminal.org home]$cd -                                                     
+/home/pinacho1                                                                        
+[pinacho1@webminal.org ~]$cd                                                          
+[pinacho1@webminal.org ~]$    
+###########################################################################################################
+#lesson 2
+[pinacho1@webminal.org ~]$touch filel.txt                                             
+[pinacho1@webminal.org ~]$touch file2.txt                                             
+[pinacho1@webminal.org ~]$dir
+dir1  dir2  file2.txt  filel.txt
+[pinacho1@webminal.org ~]$ clear
+[pinacho1@webminal.org ~]$echo "hello"
+hello
+[pinacho1@webminal.org ~]$echo "hello" > hello.txt                                    
+[pinacho1@webminal.org ~]$echo "linux" >> hello.txt
+[pinacho1@webminal.org ~]$echo "world" >> hello.txt                                   
+[pinacho1@webminal.org ~]$cat hello.txt                                               
+hello
+linux
+world
+[pinacho1@webminal.org ~]$head -2 hello.txt
+hello
+linux
+[pinacho1@webminal.org ~]$head hello.txt
+hello
+linux
+world
+[pinacho1@webminal.org ~]$tail -2 hello.txt                                           
+linux
+world
+[pinacho1@webminal.org ~]$tail hello.txt                                              
+hello
+linux
+world
+[pinacho1@webminal.org ~]$stat hello.txt
+  File: ‘hello.txt’
+  Size: 18              Blocks: 8          IO Block: 4096   regular file
+Device: 821h/2081d      Inode: 115583284   Links: 1
+Access: (0664/-rw-rw-r--)  Uid: (223195/pinacho1)   Gid: (223254/pinacho1)
+Context: guest_u:object_r:user_home_t:s0
+Access: 2020-11-09 00:46:21.986000000 +0100
+Modify: 2020-11-09 00:46:01.487000000 +0100
+Change: 2020-11-09 00:46:01.487000000 +0100
+ Birth: -
+[pinacho1@webminal.org ~]$stat dir1
+ File: ‘dir1’                                                                        
+  Size: 6               Blocks: 0          IO Block: 4096   directory                 
+Device: 821h/2081d      Inode: 50531690    Links: 2                                   
+Access: (0775/drwxrwxr-x)  Uid: (223195/pinacho1)   Gid: (223254/pinacho1)            
+Context: guest_u:object_r:user_home_t:s0                                              
+Access: 2020-11-08 23:56:11.643000000 +0100                                           
+Modify: 2020-11-08 23:46:59.919000000 +0100                                           
+Change: 2020-11-08 23:46:59.919000000 +0100                                           
+###########################################################################################################
+#lesson 3
+
+[pinacho1@webminal.org ~]$du                                                          
+0       ./dir1
+0       ./dir2/dir3/dir4
+0       ./dir2/dir3
+0       ./dir2
+36      .
+[pinacho1@webminal.org ~]$du -xh ~                                                    
+0       /home/pinacho1/dir1
+0       /home/pinacho1/dir2/dir3/dir4
+0       /home/pinacho1/dir2/dir3
+0       /home/pinacho1/dir2
+36K     /home/pinacho1
+[pinacho1@webminal.org ~]$du --max-depth 3
+0       ./dir1
+0       ./dir2/dir3/dir4
+0       ./dir2/dir3
+0       ./dir2
+36      .
+[pinacho1@webminal.org ~]$du --max-depth 3~
+0       ./dir1
+0       ./dir2/dir3/dir4
+0       ./dir2/dir3
+0       ./dir2
+36      .
+[pinacho1@webminal.org ~]$cp -v hello.txt dir2                                        
+‘hello.txt’ -> ‘dir2/hello.txt’
+[pinacho1@webminal.org ~]$cp -v hello.txt dir2/file2.txt
+cp: target ‘dir2/file2.txt’ is not a directory
+[pinacho1@webminal.org ~]$cp -v hello.txt dir2/*.txt dir2/dir3                        
+‘hello.txt’ -> ‘dir2/dir3/hello.txt’
+cp: will not overwrite just-created ‘dir2/dir3/hello.txt’ with ‘dir2/hello.txt’
+[pinacho1@webminal.org ~]$cp -vr dir2/dir3
+cp: missing destination file operand after ‘dir2/dir3’
+Try 'cp --help' for more information.
+[pinacho1@webminal.org ~]$md5sum hello.txt                                            
+b8d5079c5d6a9dbb3294b31d318d74c0  hello.txt                                           
+[pinacho1@webminal.org ~]$md5su dir2/hello.txt                                        
+-sh: md5su: command not found                                                         
+[pinacho1@webminal.org ~]$md5sum dir2/hello.txt                                       
+b8d5079c5d6a9dbb3294b31d318d74c0  dir2/hello.txt                                      
+[pinacho1@webminal.org ~]$md5sum hello.txt                                            
+b8d5079c5d6a9dbb3294b31d318d74c0  hello.txt                                           
+[pinacho1@webminal.org ~]$mv hello.txt dir2/dir3/dir4/hi.txt                          
+[pinacho1@webminal.org ~]$mkdir dir5                                                  
+[pinacho1@webminal.org ~]$mv dir2/*.txt dir5                                          
+[pinacho1@webminal.org ~]$mv dir5 dir50                                               
+[pinacho1@webminal.org ~]$in dir2/dir3/dir4/hi.txt hello                                                                        
+[pinacho1@webminal.org ~]$1n dir2/dir3/dir4/hi.txt hello                                                                                        
+[pinacho1@webminal.org ~]$stat hello                                                                                    
+[pinacho1@webminal.org ~]$stat dir2/dir3/dir4/hi.txt                                  
+  File: ‘dir2/dir3/dir4/hi.txt’                                                       
+  Size: 18              Blocks: 8          IO Block: 4096   regular file              
+Device: 821h/2081d      Inode: 115583284   Links: 1                                   
+Access: (0664/-rw-rw-r--)  Uid: (223195/pinacho1)   Gid: (223254/pinacho1)            
+Context: guest_u:object_r:user_home_t:s0                                              
+Access: 2020-11-09 00:46:21.986000000 +0100                                           
+Modify: 2020-11-09 00:46:01.487000000 +0100                                           
+Change: 2020-11-09 01:15:03.500000000 +0100                                           
+ Birth: -                                                                             
+[pinacho1@webminal.org ~]$in -s dir2/dir3/dir4/hi.txt softlink                                                               
+[pinacho1@webminal.org ~]$In -s dir2/dir3/dir4/hi.txt softlink                        
+-sh: In: command not found                                                            
+[pinacho1@webminal.org ~]$stat softlink                                                                             
+[pinacho1@webminal.org ~]$rm -i file2.txt                                             
+rm: remove regular empty file ‘file2.txt’?                                            
+[pinacho1@webminal.org ~]$rm -ri dir50/*                                              
+rm: remove regular file ‘dir50/hello.txt’? rn -rf junk/*                              
+[pinacho1@webminal.org ~]$rmdir dir50 
+###########################################################################################################
+#lesson 4
+[pinacho1@webminal.org ~]$ps
+  PID TTY          TIME CMD
+ 4666 pts/195  00:00:00 sh
+10670 pts/195  00:00:00 ps
+[pinacho1@webminal.org ~]$sleep 60 &
+[1] 10672
+[pinacho1@webminal.org ~]$ps
+  PID TTY          TIME CMD
+ 4666 pts/195  00:00:00 sh
+10672 pts/195  00:00:00 sleep
+10674 pts/195  00:00:00 ps
+[pinacho1@webminal.org ~]$kill 12345                                                  
+-sh: kill: (12345) - No such process
+[pinacho1@webminal.org ~]$ps
+  PID TTY          TIME CMD
+ 4666 pts/195  00:00:00 sh
+10672 pts/195  00:00:00 sleep
+10721 pts/195  00:00:00 ps
+top - 01:33:51 up 385 days,  6:44,  0 users,  load average: 0.07, 0.10, 0.10          
+Tasks: 413 total,   1 running, 392 sleeping,  18 stopped,   2 zombie                  
+%Cpu(s):  0.2 us,  0.2 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st       
+KiB Mem : 14871184 total,  1159628 free,  4383588 used,  9327968 buff/cache           
+KiB Swap:        0 total,        0 free,        0 used.  5534248 avail Mem            
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND          
+  404 talmagr+  20   0  116344   2384   1716 S   0.0  0.0   0:00.07 bash              
+  470 PratapA+  20   0  116196   1668   1328 S   0.0  0.0   0:00.03 sh                
+  545 durgabh+  20   0 1050064  71876  71380 S   0.0  0.5   0:00.00 vmlinux           
+  546 durgabh+  20   0 1050064  71876  71380 S   0.0  0.5   0:00.06 vmlinux           
+  547 durgabh+  20   0 1050064  71876  71380 S   0.0  0.5   0:00.01 vmlinux           
+  622 BOOJA     20   0  115596   1912   1172 S   0.0  0.0   0:00.00 nano              
+  776 NotroDan  20   0  116340   2360   1696 S   0.0  0.0   0:00.06 bash              
+ 1007 LordAsh+  20   0  115596   1864   1288 S   0.0  0.0   0:00.00 nano              
+ 1711 claudia+  20   0  115596   1848   1304 S   0.0  0.0   0:00.24 nano              
+ 2121 ranuska   20   0  116464   2340   1704 S   0.0  0.0   0:00.11 sh                
+ 2259 atout     20   0  116200   2024   1572 S   0.0  0.0   0:00.15 sh                
+ 2444 Creator   20   0  116468   2312   1676 S   0.0  0.0   0:00.05 sh                
+ 2818 Subhans+  20   0  152192   5468   2728 S   0.0  0.0   0:00.07 vim               
+ 2835 archana+  20   0  152192   5196   2636 S   0.0  0.0   0:00.06 vim               
+ 3253 atmaram+  20   0 1050064  61052  60552 S   0.0  0.4   0:00.00 vmlinux           
+ 3254 atmaram+  20   0 1050064  61052  60552 S   0.0  0.4   0:00.00 vmlinux           
+ 3254 atmaram+  20   0 1050064  61052  60552 S   0.0  0.4   0:00.06 vmlinux           
+ 3255 atmaram+  20   0 1050064  61052  60552 S   0.0  0.4   0:00.00 vmlinux           
+ 3376 Debasis+  20   0  114068   1440   1236 S   0.0  0.0   0:00.00 vimtutor          
+ 3382 Debasis+  20   0  150144   2996   2376 S   0.0  0.0   0:00.03 vim               
+ 3578 shivind+  20   0 1050064  53908  53412 S   0.0  0.4   0:00.00 vmlinux           
+ 3579 shivind+  20   0 1050064  53908  53412 S   0.0  0.4   0:00.06 vmlinux           
+ 3580 shivind+  20   0 1050064  53908  53412 S   0.0  0.4   0:00.03 vmlinux           
+ 3691 Milka20+  20   0  115596   1464   1148 S   0.0  0.0   0:00.00 nano              
+ 3698 alt3Minh  20   0  116196   2020   1572 S   0.0  0.0   0:00.07 sh                
+ 3823 princeo+  20   0  151172   4892   2532 S   0.0  0.0   0:00.10 vim               
+###########################################################################################################
+#lesson 5
+[pinacho1@webminal.org ~]$grep -r 'hello'                                             
+.bash_history:echo "hello"
+.bash_history:echo "hello" > hello.txt
+.bash_history:echo "linux" >> hello.txt
+.bash_history:echo "world" >> hello.txt
+.bash_history:cat hello.txt
+.bash_history:head -2 hello.txt
+.bash_history:head hello.txt
+.bash_history:tail -2 hello.txt
+.bash_history:tail hello.txt
+.bash_history:stat hello.txt
+.bash_history:cp -v hello.txt dir2
+.bash_history:cp -v hello.txt dir2cp -v hello.txt dir2/file2.txt
+.bash_history:cp -v hello.txt dir2/*.txt dir2/dir3
+.bash_history:md5sum hello.txt
+.bash_history:md5su dir2/hello.txt
+.bash_history:md5sum dir2/hello.txt
+.bash_history:md5sum hello.txt
+.bash_history:mv hello.txt dir2/dir3/dir4/hi.txt
+.bash_history:in dir2/dir3/dir4/hi.txt hello
+.bash_history:1n dir2/dir3/dir4/hi.txt hello
+.bash_history:stat hello
+dir2/dir3/dir4/hi.txt:hello
+dir2/dir3/hello.txt:hello
+dir50/hello.txt:hello
+[pinacho1@webminal.org ~]$grep -i 'lINUX' hello
+[pinacho1@webminal.org ~]$grep -n 'linux' hello
+[pinacho1@webminal.org ~]$grep -v 'world' hello
+[pinacho1@webminal.org ~]$wc -L hello
+[pinacho1@webminal.org ~]$echo -e "col1 col2 r1\ncol5 col6 r2\ncol3 col4 r3 " >> new.txt
+[pinacho1@webminal.org ~]$echo -e "Hello\nlinux\nProgrammers paradise" >> linux.txt
+pinacho1@webminal.org ~]$cut -f1 -d' ' new.txt
+pinacho1@webminal.org ~]$paste hello new.txt
+pinacho1@webminal.org ~]$paste -s hello new.txt
+pinacho1@webminal.org ~]$diff3 hello new.txt linux.txt
+###########################################################################################################
+#lesson 6
+[pinacho1@webminal.org ~]$dir2/dir3/dir4/hi.txt                                       
+-sh: dir2/dir3/dir4/hi.txt: Permission denied                                         
+[pinacho1@webminal.org ~]$dir2/dir3/dir4                                              
+-sh: dir2/dir3/dir4: Is a directory                                                   
+[pinacho1@webminal.org ~]$basename dir2/dir3/dir4/hi.txt                              
+hi.txt                                                                                
+[pinacho1@webminal.org ~]$hi.txt                                                      
+-sh: hi.txt: command not found                                                        
+[pinacho1@webminal.org ~]$chmod -v 666 filiel.txt                                     
+chmod: cannot access ‘filiel.txt’: No such file or directory                          
+failed to change mode of ‘filiel.txt’ from 0000 (---------) to 0000 (---------)       
+[pinacho1@webminal.org ~]$chmod a+rw filiel.txt                                       
+chmod: cannot access ‘filiel.txt’: No such file or directory                          
+[pinacho1@webminal.org ~]$chmod -R 644 ~/chmod_dir                                    
+chmod: cannot access ‘/home/pinacho1/chmod_dir’: No such file or directory            
+[pinacho1@webminal.org ~]$chown root:staff -R ~/dir2                                  
+chown: changing ownership of ‘/home/pinacho1/dir2/dir3/dir4/hi.txt’: Operation not per
+mitted                                                                                
+chown: changing ownership of ‘/home/pinacho1/dir2/dir3/dir4’: Operation not permitted 
+chown: changing ownership of ‘/home/pinacho1/dir2/dir3/hello.txt’: Operation not permi
+tted                                                                                  
+chown: changing ownership of ‘/home/pinacho1/dir2/dir3’: Operation not permitted      
+chown: changing ownership of ‘/home/pinacho1/dir2’: Operation not permitted           
+[pinacho1@webminal.org ~]$chown --from=webminal:webminal chown root:staff -R ~/dir2   
+chown: invalid user: ‘webminal:webminal’                                              
+[pinacho1@webminal.org ~]$chgrp root file1.txt                                        
+chgrp: cannot access ‘file1.txt’: No such file or directory                           
+[pinacho1@webminal.org ~]$chgrp: changing group of 'file1.txt': operation not permited
+-sh: chgrp:: command not found                                                        
+[pinacho1@webminal.org ~]$chgrp -hR root dir2                                         
+chgrp: changing group of ‘dir2/dir3/dir4/hi.txt’: Operation not permitted             
+chgrp: changing group of ‘dir2/dir3/dir4’: Operation not permitted                    
+chgrp: changing group of ‘dir2/dir3/hello.txt’: Operation not permitted               
+chgrp: changing group of ‘dir2/dir3’: Operation not permitted                         
+chgrp: changing group of ‘dir2’: Operation not permitted                              
+###########################################################################################################
+#lesson 7
+[pinacho1@webminal.org ~]$dir2/dir3/dir4/hi.txt                                       
+-sh: dir2/dir3/dir4/hi.txt: Permission denied                                         
+[pinacho1@webminal.org ~]$dir2/dir3/dir4                                              
+[pinacho1@webminal.org ~]file linux.txt                                               
+linux.txt: cannot open (No such file or directory)                                    
+[pinacho1@webminal.org ~]$file /dev/null                                              
+/dev/null: character special                                                          
+[pinacho1@webminal.org ~]$file -s /dev/sda2                                           
+/dev/sda2: cannot open (No such file or directory)                                    
+[pinacho1@webminal.org ~]$whereis ls                                                  
+ls: /usr/bin/ls /usr/share/man/man1/ls.1.gz                                           
+[pinacho1@webminal.org ~]$whereis stdio.h                                             
+stdio: /usr/include/stdio.h                                                           
+[pinacho1@webminal.org ~]$stdio: /usr/include/stdio.h /usr/share/man/man3/stdio.3.gz  
+-sh: stdio:: command not found                                                        
+[pinacho1@webminal.org ~]$php                                                         
+-sh: php: command not found                                                           
+[pinacho1@webminal.org ~]$wich php                                                    
+-sh: wich: command not found                                                          
+[pinacho1@webminal.org ~]$find ~ -name "linux.txt"                                    
+[pinacho1@webminal.org ~]$find . -type f -exec file '{}' \;                           
+./.bash_profile: ASCII text                                                           
+./.emacs: ASCII text                                                                  
+./.bash_history: ASCII text                                                           
+./.bashrc: ASCII text                                                                 
+./.bash_logout: ASCII text                                                            
+./.zshrc: ASCII text                                                                  
+./.magic_string.txt: ASCII text                                                       
+./dir2/dir3/dir4/hi.txt: ASCII text                                                   
+./dir2/dir3/hello.txt: ASCII text                                                     
+./filel.txt: empty                                                                    
+./file2.txt: empty                                                                    
+./dir50/hello.txt: ASCII text                                                         
+[pinacho1@webminal.org ~]$find . -type f -exec ls -l '{}' \;                          
+-rw-r--r--. 1 pinacho1 pinacho1 193 Dec  7  2016 ./.bash_profile                      
+-rw-r--r--. 1 pinacho1 pinacho1 334 Sep 20  2017 ./.emacs                             
+-rw-r--r--. 1 pinacho1 pinacho1 1384 Nov  9 01:52 ./.bash_history                     
+-rw-r--r--. 1 pinacho1 pinacho1 231 Dec  7  2016 ./.bashrc                            
+-rw-r--r--. 1 pinacho1 pinacho1 18 Dec  7  2016 ./.bash_logout                        
+-rw-r--r--. 1 pinacho1 pinacho1 658 Aug  2  2017 ./.zshrc                             
+-rw-r--r--. 1 root root 9 Nov  8 22:17 ./.magic_string.txt                            
+-rw-rw-r--. 1 pinacho1 pinacho1 18 Nov  9 00:46 ./dir2/dir3/dir4/hi.txt               
+-rw-rw-r--. 1 pinacho1 pinacho1 18 Nov  9 01:10 ./dir2/dir3/hello.txt                 
+-rw-rw-r--. 1 pinacho1 pinacho1 0 Nov  9 00:42 ./filel.txt                            
+-rw-rw-r--. 1 pinacho1 pinacho1 0 Nov  9 00:42 ./file2.txt                            
+-rw-rw-r--. 1 pinacho1 pinacho1 18 Nov  9 01:02 ./dir50/hello.txt                     
+[pinacho1@webminal.org ~]$find . -type f -size +20c -exec cp dir1 {} \;               
+cp: omitting directory ‘dir1’                                                         
+cp: omitting directory ‘dir1’                                                         
+cp: omitting directory ‘dir1’                                                         
+cp: omitting directory ‘dir1’                                                         
+cp: omitting directory ‘dir1’           
+###########################################################################################################
+#lesson 8
+[pinacho1@webminal.org ~]$uptime                                                      
+ 02:24:59 up 385 days,  7:36,  0 users,  load average: 0.01, 0.05, 0.05               
+[pinacho1@webminal.org ~]$date                                                        
+Mon Nov  9 02:25:05 CET 2020                                                          
+[pinacho1@webminal.org ~]$who                                                         
+[pinacho1@webminal.org ~]$who -a                                                      
+[pinacho1@webminal.org ~]$w                                                           
+ 02:25:30 up 385 days,  7:36,  0 users,  load average: 0.14, 0.07, 0.05               
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT                   
+[pinacho1@webminal.org ~]$mount                                                       
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime,seclabel)                   
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)                             
+devtmpfs on /dev type devtmpfs (rw,nosuid,seclabel,size=7425888k,nr_inodes=1856472,mod
+e=755)                                                                                
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)  
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev,seclabel)                               
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,seclabel,gid=5,mode=620,ptmx
+mode=000)                                                                             
+tmpfs on /run type tmpfs (rw,nosuid,nodev,seclabel,mode=755)                          
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,seclabel,mode=755)         
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,re
+lease_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)                      
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)                
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime
+,net_prio,net_cls)                                                                    
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)  
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpua
+cct,cpu)                                                                              
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)    
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_
+event)                                                                                
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)      
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)  
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+configfs on /sys/kernel/config type configfs (rw,relatime)                            
+/dev/sda1 on / type ext4 (rw,relatime,seclabel,discard,errors=remount-ro,data=ordered)
+selinuxfs on /sys/fs/selinux type selinuxfs (rw,relatime)                             
+mqueue on /dev/mqueue type mqueue (rw,relatime,seclabel)                              
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,seclabel)                     
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)                               
+sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)                       
+/dev/sdc1 on /home type xfs (rw,nosuid,nodev,noexec,relatime,seclabel,attr2,inode64,us
+rquota)                                                                               
+/dev/sdb on /common_pool type xfs (rw,nosuid,nodev,noexec,relatime,seclabel,attr2,inod
+e64,noquota)                                                                          
+[pinacho1@webminal.org ~]$mount -t ext4                                               
+/dev/sda1 on / type ext4 (rw,relatime,seclabel,discard,errors=remount-ro,data=ordered)
+[pinacho1@webminal.org ~]$df -h                                                       
+Filesystem      Size  Used Avail Use% Mounted on                                      
+/dev/sda1        99G   47G   48G  50% /                                               
+devtmpfs        7.1G     0  7.1G   0% /dev                                            
+tmpfs           7.1G  3.5G  3.6G  50% /dev/shm                                        
+tmpfs           7.1G  724M  6.4G  10% /run                                            
+tmpfs           7.1G     0  7.1G   0% /sys/fs/cgroup                                  
+/dev/sdc1        30G   18G   13G  59% /home                                           
+/dev/sdb         10G  3.6G  6.5G  36% /common_pool                                    
+[pinacho1@webminal.org ~]$free -m                                                     
+              total        used        free      shared  buff/cache   available       
+Mem:          14522        4237        1162        4305        9121        5439       
+Swap:             0           0           0                                           
+[pinacho1@webminal.org ~]$    
+###########################################################################################################
+#lesson 9
+[pinacho1@webminal.org ~]$hostname                                                    
+server-1.localdomain                                                                  
+[pinacho1@webminal.org ~]$file /bin/hostname                                          
+/bin/hostname: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked
+ (uses shared libs), for GNU/Linux 2.6.32, BuildID[sha1]=c2b88b145e890709f0a93fdab448b
+fc40d10eb18, stripped                                                                 
+[pinacho1@webminal.org ~]$cat /bin/hostname
+Program name:                                                                         
+       {yp,nis,}domainname=hostname -y                                                
+       dnsdomainname=hostname -d                                                      
+                                                                                      
+Program options:                                                                      
+    -a, --alias            alias names                                                
+    -A, --all-fqdns        all long host names (FQDNs)                                
+    -b, --boot             set default hostname if none available                     
+    -d, --domain           DNS domain name                                            
+    -f, --fqdn, --long     long host name (FQDN)                                      
+    -F, --file             read host name or NIS domain name from given file          
+    -i, --ip-address       addresses for the host name                                
+    -I, --all-ip-addresses all addresses for the host                                 
+    -s, --short            short host name                                            
+    -y, --yp, --nis        NIS/YP domain name                                         
+                                                                                      
+Description:                                                                          
+   This command can get or set the host name or the NIS domain name. You can          
+   also get the DNS domain or the FQDN (fully qualified domain name).                 
+   Unless you are using bind or NIS for host lookups you can change the               
+   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is               
+   part of the FQDN) in the /etc/hosts file.
+   [pinacho1@webminal.org ~]$ps -o ppid,cmd27447                                                                       
+                                                                                      
+Usage:                                                                                
+ ps [options]                                                                         
+                                                                                      
+ Try 'ps --help <simple|list|output|threads|misc|all>'                                
+  or 'ps --help <s|l|o|t|m|a>'                                                        
+ for additional help text.                                                            
+                                                                                      
+For more details see ps(1).
+
+###########################################################################################################
+#lesson 10
+[pinacho1@webminal.org ~]$ps                                                          
+  PID TTY          TIME CMD                                                           
+12251 pts/84   00:00:00 sh                                                            
+14456 pts/84   00:00:00 ps                                                            
+[pinacho1@webminal.org ~]$sleep 5                                                     
+[pinacho1@webminal.org ~]$sleep 5                                                     
+sleep[pinacho1@webminal.org ~]$sleep 2                                                
+[pinacho1@webminal.org ~]$sleep 5&                                                    
+[1] 14509                                                                             
+[pinacho1@webminal.org ~]$sleep 2                                                     
+[1]+  Done                    sleep 5                                                 
+[pinacho1@webminal.org ~]$sleep 5&                                                    
+[1] 14552                                                                             
+[pinacho1@webminal.org ~]$ps                                                          
+  PID TTY          TIME CMD                                                           
+12251 pts/84   00:00:00 sh                                                            
+14553 pts/84   00:00:00 ps                                                            
+[1]+  Done                    sleep 5                                                 
+[pinacho1@webminal.org ~]$pstree 5254                                                 
+[pinacho1@webminal.org ~]$pstree -p 5254                                              
+[pinacho1@webminal.org ~]$sleep 45&                                                   
+[1] 14773                                                                             
+[pinacho1@webminal.org ~]$sleep 45&                                                   
+[2] 14782                                                                             
+[pinacho1@webminal.org ~]$sleep 45&                                                   
+[3] 14783                                                                             
+[pinacho1@webminal.org ~]$sleep 45&                                                   
+[4] 14784                                                                             
+[pinacho1@webminal.org ~]$sleep 45&                                                   
+[5] 14786                                                                             
+[pinacho1@webminal.org ~]$pstree -p 5254                                              
+[1]   Done                    sleep 45                                                
+[2]   Done                    sleep 45                                                
+[pinacho1@webminal.org ~]$fg                                                          
+sleep 45                                                                              
+[3]   Done                    sleep 45                                                
+[4]   Done                    sleep 45                                                
+[pinacho1@webminal.org ~]$bg 5                                                        
+-sh: bg: 5: no such job                                                               
+[pinacho1@webminal.org ~]$jobs    
+###########################################################################################################
+#lesson 11
+[pinacho1@webminal.org ~]$ps -S                                                       
+  PID TTY      STAT   TIME COMMAND                                                    
+12251 pts/84   Ss     0:06 -sh                                                        
+15476 pts/84   R+     0:00 ps -S                                                      
+[pinacho1@webminal.org ~]$ps S                                                        
+  PID TTY      STAT   TIME COMMAND                                                    
+12251 pts/84   Ss     0:06 -sh                                                        
+15478 pts/84   R+     0:00 ps S                                                       
+[pinacho1@webminal.org ~]$sleep 100                                                   
+[pinacho1@webminal.org ~]$ps                                                          
+  PID TTY          TIME CMD                                                           
+12251 pts/84   00:00:00 sh                                                            
+15629 pts/84   00:00:00 ps                                                            
+[pinacho1@webminal.org ~]$jobs                                                        
+[pinacho1@webminal.org ~]$fg                                                          
+-sh: fg: current: no such job                                                         
+[pinacho1@webminal.org ~]$bash                                                        
+[pinacho1@webminal.org ~]$ps S                                                        
+  PID TTY      STAT   TIME COMMAND                                                    
+12251 pts/84   Ss     0:06 -sh                                                        
+15630 pts/84   S      0:00 bash                                                       
+15651 pts/84   R+     0:00 ps S                                                       
+[pinacho1@webminal.org ~]$ps -o ppid 3376                                             
+ PPID                                                                                 
+    1                                                                                 
+   
