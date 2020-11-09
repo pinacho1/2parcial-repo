@@ -1,0 +1,207 @@
+Josue Daniel Pinacho
+########################################################
+Spool Oracle_12c_CIS_Audit.html
+	
+
+	prompt [Test]: Ensure All Default Passwords Are Changed
+	prompt [Query] : SELECT USERNAME FROM DBA_USERS_WITH_DEFPWD WHERE USERNAME NOT LIKE '%XS$NULL%';
+	prompt [Output]:
+	SELECT USERNAME FROM DBA_USERS_WITH_DEFPWD WHERE USERNAME NOT LIKE '%XS$NULL%';
+	prompt [Expected Output]: Empty Result
+	prompt [Remediation]: For each username run PASSWORD <username> 
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure All Sample Data And Users Have Been Removed 
+	prompt [Query] : SELECT USERNAME FROM ALL_USERS WHERE USERNAME IN ('BI','HR','IX','OE','PM','SCOTT','SH');
+	prompt [Output]:
+	SELECT USERNAME FROM ALL_USERS WHERE USERNAME IN ('BI','HR','IX','OE','PM','SCOTT','SH');
+	prompt [Expected Output]: Empty Result
+	prompt [Remediation]: Execute $ORACLE_HOME/demo/schema/drop_sch.sql and then DROP USER SCOTT CASCADE;	  
+	prompt -----------------------------------------
+	
+
+	prompt [Manual Test]: Ensure 'SECURE_CONTROL_<listener_name>' Is Set In 'listener.ora'
+	prompt [Expected Output]: In the $ORACLE_HOME/network/admin/listener.ora ensure each listener has an associated SECURE_CONTROL_<listener_name> directive
+	prompt [Remediation]: Set the SECURE_CONTROL_<listener_name> for each defined listener in the listener.ora	
+	prompt -----------------------------------------
+	
+
+	prompt [Manual Test]: Ensure 'extproc' Is Not Present in 'listener.ora'	  
+	prompt [Expected Output]: Run grep -i extproc $ORACLE_HOME/network/admin/listener.ora and ensure extproc does not exist
+	prompt [Remediation]: Remove extproc from the listener.ora file
+	prompt -----------------------------------------
+	
+
+	prompt [Manual Test]: Ensure 'ADMIN_RESTRICTIONS_<listener_name>' Is Set to 'ON'
+	prompt [Expected Output]: Run grep -i admin_restrictions $ORACLE_HOME/network/admin/listener.ora and ensure ADMIN_RESTRICTIONS_<listener_name> is set to ON for	all listeners
+	prompt [Remediation]: Set the ADMIN_RESTRICTIONS_<listener_name> value to ON
+	prompt -----------------------------------------
+	
+
+	prompt [Manual Test]: Ensure 'SECURE_REGISTER_<listener_name>' Is Set to 'TCPS' or 'IPC'
+	prompt [Expected Output]: grep -i SECURE_REGISTER $ORACLE_HOME/network/admin/listener.ora and ensure SECURE_REGISTER_<listener_name> is set to TCPS or IPC
+	prompt [Remediation]: For each listener set the SECURE_REGISTER_<listener_name>=TCPS or SECURE_REGISTER_<listener_name>=IPC
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'AUDIT_SYS_OPERATIONS' Is Set to 'TRUE' 	
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME) = 'AUDIT_SYS_OPERATIONS';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME) = 'AUDIT_SYS_OPERATIONS';
+	prompt [Expected Output]: AUDIT_SYS_OPERATIONS Value Is Set to 'TRUE'
+	prompt [Remediation]: ALTER SYSTEM SET AUDIT_SYS_OPERATIONS = TRUE SCOPE=SPFILE; 
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'AUDIT_TRAIL' Is Set to 'OS','DB,EXTENDED', or 'XML,EXTENDED' 	
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='AUDIT_TRAIL';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='AUDIT_TRAIL';
+	prompt [Expected Output]: AUDIT_TRAIL VALUE is set to OS or	DB,EXTENDED or XML,EXTENDED.	  
+	prompt [Remediation]: ALTER SYSTEM SET AUDIT_TRAIL = 'DB,EXTENDED' SCOPE = SPFILE; or ALTER SYSTEM SET AUDIT_TRAIL = 'OS' SCOPE = SPFILE; or ALTER SYSTEM SET AUDIT_TRAIL = 'XML,EXTENDED' SCOPE = SPFILE;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'GLOBAL_NAMES' Is Set to 'TRUE' 	
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='GLOBAL_NAMES';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='GLOBAL_NAMES';
+	prompt [Expected Output]: GLOBAL_NAMES VALUE is set to TRUE
+	prompt [Remediation]: ALTER SYSTEM SET GLOBAL_NAMES = TRUE SCOPE = SPFILE;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'LOCAL_LISTENER' Is Set Appropriately 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='LOCAL_LISTENER';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='LOCAL_LISTENER';
+	prompt [Expected Output]: VALUE is	set to (DESCRIPTION=(ADDRESS= (PROTOCOL=IPC)(KEY=REGISTER)))	
+	prompt [Remediation]: ALTER SYSTEM SET LOCAL_LISTENER='[description]' SCOPE = BOTH;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'O7_DICTIONARY_ACCESSIBILITY' Is Set to 'FALSE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='O7_DICTIONARY_ACCESSIBILITY';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='O7_DICTIONARY_ACCESSIBILITY';
+	prompt [Expected Output]: VALUE is set to FALSE
+	prompt [Remediation]: ALTER SYSTEM SET O7_DICTIONARY_ACCESSIBILITY=FALSE SCOPE = SPFILE;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'OS_ROLES' Is Set to 'FALSE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='OS_ROLES';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='OS_ROLES';
+	prompt [Expected Output]: VALUE is set to FALSE
+	prompt [Remediation]: ALTER SYSTEM SET OS_ROLES = FALSE SCOPE = SPFILE;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'REMOTE_LISTENER' Is Empty 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_LISTENER'; 
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_LISTENER';
+	prompt [Expected Output]: Empty result
+	prompt [Remediation]: ALTER SYSTEM SET REMOTE_LISTENER = '' SCOPE = SPFILE;  
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'REMOTE_LOGIN_PASSWORDFILE' Is Set to 'NONE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_LOGIN_PASSWORDFILE';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_LOGIN_PASSWORDFILE';
+	prompt [Expected Output]: VALUE is set to NONE  
+	prompt [Remediation]: ALTER SYSTEM SET REMOTE_LOGIN_PASSWORDFILE = 'NONE' SCOPE = SPFILE; 
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'REMOTE_OS_AUTHENT' Is Set to 'FALSE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_OS_AUTHENT';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_OS_AUTHENT';
+	prompt [Expected Output]: VALUE is set to FALSE
+	prompt [Remediation]: ALTER SYSTEM SET REMOTE_OS_AUTHENT = FALSE SCOPE = SPFILE;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'REMOTE_OS_ROLES' Is Set to 'FALSE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_OS_ROLES';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='REMOTE_OS_ROLES';
+	prompt [Expected Output]: VALUE is set to FALSE	  
+	prompt [Remediation]: ALTER SYSTEM SET REMOTE_OS_ROLES = FALSE SCOPE = SPFILE;
+	prompt -----------------------------------------	
+	
+
+	prompt [Test]: Ensure 'UTIL_FILE_DIR' Is Empty 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='UTIL_FILE_DIR';
+	prompt [Output]:
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='UTIL_FILE_DIR';
+	prompt [Expected Output]: Empty result
+	prompt [Remediation]: ALTER SYSTEM SET UTIL_FILE_DIR = '' SCOPE = SPFILE;
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'SEC_CASE_SENSITIVE_LOGON' Is Set to 'TRUE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_CASE_SENSITIVE_LOGON';
+	prompt [Output]: 
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_CASE_SENSITIVE_LOGON'; 
+	prompt [Expected Output]: VALUE is set to TRUE	  
+	prompt [Remediation]: ALTER SYSTEM SET SEC_CASE_SENSITIVE_LOGON = TRUE SCOPE = SPFILE; 
+	prompt -----------------------------------------
+	
+
+	prompt [Test]: Ensure 'SEC_MAX_FAILED_LOGIN_ATTEMPTS' Is Set to '10' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_MAX_FAILED_LOGIN_ATTEMPTS'; 
+	prompt [Output]: 
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_MAX_FAILED_LOGIN_ATTEMPTS'; 
+	prompt [Expected Output]: VALUE is set to 10
+	prompt [Remediation]: ALTER SYSTEM SET SEC_MAX_FAILED_LOGIN_ATTEMPTS = 10 SCOPE = SPFILE;
+	prompt ----------------------------------------- 
+	
+
+	prompt [Test]: Ensure 'SEC_PROTOCOL_ERROR_FURTHER_ACTION' Is Set to 'DELAY,3' or 'DROP,3' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_PROTOCOL_ERROR_FURTHER_ACTION';
+	prompt [Output]:  
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_PROTOCOL_ERROR_FURTHER_ACTION';
+	prompt [Expected Output]: VALUE is set to DELAY,3 or DROP,3
+	prompt [Remediation]: ALTER SYSTEM SET SEC_PROTOCOL_ERROR_FURTHER_ACTION = 'DELAY,3' SCOPE = SPFILE; or ALTER SYSTEM SET SEC_PROTOCOL_ERROR_FURTHER_ACTION = 'DROP,3' SCOPE = SPFILE;
+	prompt ----------------------------------------- 
+	
+
+	prompt [Test]: Ensure 'SEC_PROTOCOL_ERROR_TRACE_ACTION' Is Set to 'LOG' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_PROTOCOL_ERROR_TRACE_ACTION'; 
+	prompt [Output]: 
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_PROTOCOL_ERROR_TRACE_ACTION';
+	prompt [Expected Output]: VALUE is set to LOG
+	prompt [Remediation]: ALTER SYSTEM SET SEC_PROTOCOL_ERROR_TRACE_ACTION=LOG SCOPE = SPFILE; 
+	prompt ----------------------------------------- 
+	
+
+	prompt [Test]: Ensure 'SEC_RETURN_SERVER_RELEASE_BANNER' Is Set to 'FALSE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_RETURN_SERVER_RELEASE_BANNER'; 
+	prompt [Output]: 
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SEC_RETURN_SERVER_RELEASE_BANNER';
+	prompt [Expected Output]: VALUE is set to FALSE
+	prompt [Remediation]: ALTER SYSTEM SET SEC_RETURN_SERVER_RELEASE_BANNER = FALSE SCOPE = SPFILE; 
+	prompt ----------------------------------------- 
+	
+
+	prompt [Test]: Ensure 'SQL92_SECURITY' Is Set to 'FALSE' 
+	prompt [Query] : SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SQL92_SECURITY'; 
+	prompt [Output]: 
+	SELECT UPPER(VALUE) FROM V$PARAMETER WHERE UPPER(NAME)='SQL92_SECURITY';   
+	prompt [Expected Output]: VALUE is set to SCOPE
+	prompt [Remediation]: ALTER SYSTEM SET SQL92_SECURITY = FALSE SCOPE = SPFILE;
+	prompt ----------------------------------------- 
+	
+
+	prompt [Test]: Ensure '_TRACE_FILES_PUBLIC'	Is Set to 'FALSE' 
+	prompt [Query] : SELECT VALUE FROM V$PARAMETER WHERE NAME='_trace_files_public';
+	prompt [Output]: 
+	SELECT VALUE FROM V$PARAMETER WHERE NAME='_trace_files_public'; 
+	prompt [Expected Output]: VALUE equal to FALSE or empty result
+	prompt [Remediation]: ALTER SYSTEM SET "_trace_files_public" = FALSE SCOPE = SPFILE; 
+	prompt ----------------------------------------- 
